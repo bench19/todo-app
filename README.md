@@ -19,5 +19,9 @@ There are 6 end-points for Todo-app, those are -
 	
 Contains individual JUnit test cases for -
 
-	 - Controller layer
-	 - Service layer
+	- Controller layer
+	- Service layer
+	 
+Added Jacoco Maven plugin for code coverage of implementation layers
+
+	- positive & negative/exception scenario
