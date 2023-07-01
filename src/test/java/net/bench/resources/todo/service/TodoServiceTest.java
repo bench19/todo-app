@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import net.bench.resources.todo.entities.Todo;
+import net.bench.resources.todo.exception.TodoItemNotFoundException;
 import net.bench.resources.todo.model.TodoRequest;
 import net.bench.resources.todo.model.TodoResponse;
 import net.bench.resources.todo.repositoy.TodoRepository;
@@ -39,6 +40,20 @@ public class TodoServiceTest {
 
 		// executing and asserting
 		Assertions.assertEquals(todoResponse, todoService.getTodoById("1"));
+	}
+
+	// 1.B negative/exception test case for getTodoById
+	@Test
+	public void testGetTodoById_exeption() {
+
+		// test data
+		Optional<Todo> optionalTodo = Optional.empty();
+
+		// mocking repository layer
+		Mockito.when(todoRepository.findById(1L)).thenReturn(optionalTodo);
+
+		// executing and asserting
+		Assertions.assertThrows(TodoItemNotFoundException.class, () -> todoService.getTodoById("1"));
 	}
 
 	// 2. test case for getAllTodoList
@@ -88,6 +103,21 @@ public class TodoServiceTest {
 		Assertions.assertEquals(todoResponse, todoService.updateTodoById("1", todoRequest));
 	}
 
+	// 4.B negative/exception test case for updateTodoById
+	@Test
+	public void testUpdateTodoById_exception() {
+
+		// test data
+		Optional<Todo> optionalTodo = Optional.empty();
+		TodoRequest todoRequest = TestUtils.createTodoRequest();
+
+		// mocking repository layer
+		Mockito.when(todoRepository.findById(1L)).thenReturn(optionalTodo);
+
+		// executing and asserting
+		Assertions.assertThrows(TodoItemNotFoundException.class, () -> todoService.updateTodoById("1", todoRequest));
+	}
+
 	// 5. test case for updateTodoById
 	@Test
 	public void testDeleteTodoById() {
@@ -101,6 +131,20 @@ public class TodoServiceTest {
 
 		// executing and asserting
 		Assertions.assertEquals(todoResponse, todoService.deleteTodoById("1"));
+	}
+
+	// 5.B negative/exception test case for updateTodoById
+	@Test
+	public void testDeleteTodoById_exception() {
+
+		// test data
+		Optional<Todo> optionalTodo = Optional.empty();
+
+		// mocking repository layer
+		Mockito.when(todoRepository.findById(1L)).thenReturn(optionalTodo);
+
+		// executing and asserting
+		Assertions.assertThrows(TodoItemNotFoundException.class, () -> todoService.deleteTodoById("1"));
 	}
 
 	// 6. test case for clearTodos

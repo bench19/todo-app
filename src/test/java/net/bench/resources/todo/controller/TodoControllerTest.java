@@ -3,6 +3,7 @@ package net.bench.resources.todo.controller;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import net.bench.resources.todo.exception.TodoItemNotFoundException;
 import net.bench.resources.todo.model.TodoRequest;
 import net.bench.resources.todo.model.TodoResponse;
 import net.bench.resources.todo.service.ITodoService;
@@ -53,6 +55,23 @@ public class TodoControllerTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
 		.andExpect(MockMvcResultMatchers.content().json(jsonContent));
+	}
+
+	// 1.B negative/exception test case for get Todo by Id
+	@Test
+	public void testGetTodoById_exception() throws Exception {
+
+		// URI
+		String uri = "/todos/1";
+
+		// mock service layer
+		Mockito.when(iTodoService.getTodoById("1")).thenThrow(TodoItemNotFoundException.class);
+
+		// executing and asserting
+		this.mockMvc.perform(MockMvcRequestBuilders.get(uri)
+				.contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TodoItemNotFoundException));
 	}
 
 	// 2. test case for get all Todo list
@@ -137,6 +156,30 @@ public class TodoControllerTest {
 		.andExpect(MockMvcResultMatchers.content().json(jsonContent));
 	}
 
+	// 4.B negative/exception test case for update Todo by Id
+	@Test
+	public void testUpdateTodoById_exception() throws Exception {
+
+		// URI
+		String uri = "/todos/1";
+
+		// request object
+		TodoRequest request = TestUtils.createTodoRequest();
+
+		// request json
+		String jsonRequest = TestUtils.convertObjectToJson(request);
+
+		// mock service layer
+		Mockito.when(iTodoService.updateTodoById("1", request)).thenThrow(TodoItemNotFoundException.class);
+
+		// executing and asserting
+		this.mockMvc.perform(MockMvcRequestBuilders.patch(uri)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))
+				.contentType("application/json;charset=UTF-8").content(jsonRequest))
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TodoItemNotFoundException));
+	}
+
 	// 5. test case for delete Todo by Id
 	@Test
 	public void testDeleteTodoById() throws Exception {
@@ -164,6 +207,30 @@ public class TodoControllerTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
 		.andExpect(MockMvcResultMatchers.content().json(jsonContent));
+	}
+
+	// 5.B negative/exception test case for delete Todo by Id
+	@Test
+	public void testDeleteTodoById_exception() throws Exception {
+
+		// URI
+		String uri = "/todos/1";
+
+		// request object
+		TodoRequest request = TestUtils.createTodoRequest();
+
+		// request json
+		String jsonRequest = TestUtils.convertObjectToJson(request);
+
+		// mock service layer
+		Mockito.when(iTodoService.deleteTodoById("1")).thenThrow(TodoItemNotFoundException.class);
+
+		// executing and asserting
+		this.mockMvc.perform(MockMvcRequestBuilders.delete(uri)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))
+				.contentType("application/json;charset=UTF-8").content(jsonRequest))
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TodoItemNotFoundException));
 	}
 
 	// 6. test case for delete all Todo list
