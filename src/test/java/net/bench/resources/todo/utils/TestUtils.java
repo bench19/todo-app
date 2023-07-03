@@ -23,7 +23,7 @@ public class TestUtils {
 		todoResponse.setId(1);
 		todoResponse.setItem("Cleaning");
 		todoResponse.setCompleted(false);
-		todoResponse.setOrderNumber(11);
+		todoResponse.setOrderNumber(101);
 		return todoResponse;
 	}
 
@@ -37,7 +37,7 @@ public class TestUtils {
 		todoRequest.setId(1);
 		todoRequest.setItem("Cleaning");
 		todoRequest.setCompleted(false);
-		todoRequest.setOrderNumber(11);
+		todoRequest.setOrderNumber(101);
 		return todoRequest;
 	}
 
@@ -79,7 +79,7 @@ public class TestUtils {
 		todo.setId(1);
 		todo.setItem("Cleaning");
 		todo.setCompleted(false);
-		todo.setOrderNumber(11);
+		todo.setOrderNumber(101);
 		return Optional.of(todo);
 	}
 
@@ -93,7 +93,7 @@ public class TestUtils {
 		todo.setId(1);
 		todo.setItem("Cleaning");
 		todo.setCompleted(false);
-		todo.setOrderNumber(11);
+		todo.setOrderNumber(101);
 		return todo;
 	}
 

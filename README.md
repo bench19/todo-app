@@ -25,3 +25,9 @@ Contains individual JUnit test cases for -
 Added Jacoco Maven plugin for code coverage of implementation layers
 
 	- positive & negative/exception scenario
+	
+Added Java REST API client for testing all APIs using
+
+	- RestTemplate for synchronous calls
+	- AsyncRestTemplate for asynchronous calls (deprecated in Spring 5 instead use WebClient)
+	- Use WebClient from Spring 5 version for both synchronous & asynchronous calls
