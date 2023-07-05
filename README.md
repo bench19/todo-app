@@ -30,4 +30,14 @@ Added Java REST API client for testing all APIs using
 
 	- RestTemplate for synchronous calls
 	- AsyncRestTemplate for asynchronous calls (deprecated in Spring 5 instead use WebClient)
-	- Use WebClient from Spring 5 version for both synchronous & asynchronous calls
+	- Use WebClient.Builder from Spring 5 version for both synchronous & asynchronous calls
+	
+Added Spring 5 Webflux for Reactive programming
+
+	- Use Builder pattern to test different REST APIs using WebClient.Builder
+	
+Added generic/global exception handler 
+
+	- @RestControllerAdvice
+	- @ExceptionHandler
+	- Extending abstract class ResponseEntityExceptionHandler & overriding/implementing methods

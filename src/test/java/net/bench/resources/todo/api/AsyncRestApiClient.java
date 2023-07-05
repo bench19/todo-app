@@ -43,10 +43,8 @@ public class AsyncRestApiClient {
 		// header parameters
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setAccept(Arrays.asList(MediaType.parseMediaType("application/json;charset=UTF-8")));
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<TodoRequest> httpEntity = new HttpEntity<TodoRequest>(todoRequest, headers);
-
-
 
 		// invoke POST API using AsyncRestTemplate
 		ListenableFuture<ResponseEntity<TodoResponse>> future = asyncRestTemplate

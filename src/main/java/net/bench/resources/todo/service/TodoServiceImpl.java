@@ -45,7 +45,7 @@ public class TodoServiceImpl implements ITodoService {
 
 		} else {
 
-			throw new TodoItemNotFoundException();
+			throw new TodoItemNotFoundException("Todo item not found in DB for retrieval");
 		}
 	}
 
@@ -62,11 +62,11 @@ public class TodoServiceImpl implements ITodoService {
 		List<TodoResponse> responseTodos = new ArrayList<TodoResponse>();
 
 		// iterate and set entity Todo to TodoResponse
-		for(Todo todo : todos) {
+		todos.forEach(todo -> {
 			TodoResponse todoResponse = new TodoResponse(); 
 			BeanUtils.copyProperties(todo, todoResponse);
 			responseTodos.add(todoResponse);
-		}
+		});
 
 		// return
 		return responseTodos;
@@ -124,7 +124,7 @@ public class TodoServiceImpl implements ITodoService {
 
 		} else {
 
-			throw new TodoItemNotFoundException();
+			throw new TodoItemNotFoundException("Todo item not found in DB for updation");
 		}
 	}
 
@@ -156,7 +156,7 @@ public class TodoServiceImpl implements ITodoService {
 
 		} else {
 
-			throw new TodoItemNotFoundException();
+			throw new TodoItemNotFoundException("Todo item not found in DB for deletion");
 		}
 	}
 
@@ -173,11 +173,11 @@ public class TodoServiceImpl implements ITodoService {
 		List<TodoResponse> responseTodos = new ArrayList<TodoResponse>();
 
 		// iterate and set entity Todo to TodoResponse
-		for(Todo todo : todos) {
+		todos.forEach(todo -> {
 			TodoResponse todoResponse = new TodoResponse(); 
 			BeanUtils.copyProperties(todo, todoResponse);
 			responseTodos.add(todoResponse);
-		}
+		});
 
 		// finally delete all Todo
 		todoRepository.deleteAll();
